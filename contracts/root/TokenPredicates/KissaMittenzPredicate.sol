@@ -15,7 +15,7 @@ contract KissaMittenzPredicate is ITokenPredicate, AccessControlMixin, Initializ
     using SafeMath for uint256;
 
     bytes32 public constant MANAGER_ROLE = keccak256("MANAGER_ROLE");
-    bytes32 public constant TOKEN_TYPE = keccak256("ERC20");
+    bytes32 public constant TOKEN_TYPE = keccak256("KissaMittenzERC20");
     bytes32 public constant TRANSFER_EVENT_SIG = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef;
 
     // Pegged exchange rate from MITTN to KISSA.
@@ -99,14 +99,14 @@ contract KissaMittenzPredicate is ITokenPredicate, AccessControlMixin, Initializ
 
         require(
             bytes32(logTopicRLPList[0].toUint()) == TRANSFER_EVENT_SIG, // topic0 is event sig
-            "ERC20Predicate: INVALID_SIGNATURE"
+            "KissaMittenzPredicate: INVALID_SIGNATURE"
         );
 
         address withdrawer = address(logTopicRLPList[1].toUint()); // topic1 is from address
 
         require(
             address(logTopicRLPList[2].toUint()) == address(0), // topic2 is to address
-            "ERC20Predicate: INVALID_RECEIVER"
+            "KissaMittenzPredicate: INVALID_RECEIVER"
         );
 
         uint256 amountInKissa = logRLPList[2].toUint(); // log data field
